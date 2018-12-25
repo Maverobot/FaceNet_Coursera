@@ -77,6 +77,8 @@ def verify(image_path, identity, database, model):
     # Step 2: Compute distance with identity's image (≈ 1 line)
     dist = np.linalg.norm(encoding - database[identity])
 
+    print("The distance is " + str(dist))
+
     # Step 3: Open the door if dist < 0.7, else don't open (≈ 3 lines)
     if dist < 0.7:
         print("It's " + str(identity) + ", welcome home!")
@@ -172,10 +174,14 @@ class RequestHandler(SimpleXMLRPCRequestHandler):
 with SimpleXMLRPCServer(('localhost', 8000),
                         requestHandler=RequestHandler) as server:
     server.register_introspection_functions()
-    def face_detection(pic_path):
+    def get_identity(pic_path):
         [_, name] = who_is_it(pic_path, database, FRmodel)
         return name
-    server.register_function(face_detection, name="check_identity")
+    server.register_function(get_identity)
+    def verify_function(pic_path, name):
+        [_, same_person] = verify(pic_path, name, database, FRmodel)
+        return same_person
+    server.register_function(verify_function, name='verify')
     print("Ready to take face recognition request...")
     server.serve_forever()
 
