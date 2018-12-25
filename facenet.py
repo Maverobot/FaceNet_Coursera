@@ -18,6 +18,9 @@ import tensorflow as tf
 from fr_utils import *
 from inception_blocks_v2 import *
 
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.server import SimpleXMLRPCRequestHandler
+
 np.set_printoptions(threshold=np.nan)
 
 def triplet_loss(y_true, y_pred, alpha = 0.2):
@@ -155,7 +158,28 @@ database["felix"] = img_to_encoding("images/felix.jpg", FRmodel)
 database["benoit"] = img_to_encoding("images/benoit.jpg", FRmodel)
 database["arnaud"] = img_to_encoding("images/arnaud.jpg", FRmodel)
 
+print("Some tests...")
 verify("images/camera_0.jpg", "younes", database, FRmodel)
 verify("images/camera_2.jpg", "kian", database, FRmodel)
-
 who_is_it("images/camera_0.jpg", database, FRmodel)
+
+# Restrict to a particular path.
+class RequestHandler(SimpleXMLRPCRequestHandler):
+    rpc_paths = ('/RPC2',)
+
+# Create server
+with SimpleXMLRPCServer(('localhost', 8000),
+                        requestHandler=RequestHandler) as server:
+    server.register_introspection_functions()
+    def face_detection(pic_path):
+        [_, name] = who_is_it(pic_path, database, FRmodel)
+        return name
+    server.register_function(face_detection, name="check_identity")
+    print("Ready to take face recognition request...")
+    server.serve_forever()
+
+# Example client
+# import xmlrpc.client
+# s = xmlrpc.client.ServerProxy('http://localhost:8000')
+# print(s.face_detection("path_to_the_picture"))  # Returns 2**3 = 8
+
