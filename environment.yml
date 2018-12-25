@@ -5,12 +5,14 @@ dependencies:
   - _tflow_select=2.3.0=mkl
   - absl-py=0.6.1=py36_0
   - astor=0.7.1=py36_0
+  - backcall=0.1.0=py36_0
   - blas=1.0=mkl
   - bzip2=1.0.6=h14c3975_5
   - c-ares=1.15.0=h7b6447c_1
   - ca-certificates=2018.03.07=0
   - cairo=1.14.12=h8948797_3
-  - certifi=2018.10.15=py36_0
+  - certifi=2018.11.29=py36_0
+  - decorator=4.3.0=py36_0
   - ffmpeg=4.0=hcdf2ecd_0
   - fontconfig=2.13.0=h9420a91_0
   - freeglut=3.0.0=hf484d3e_5
@@ -24,7 +26,10 @@ dependencies:
   - hdf5=1.10.2=hba1933b_1
   - icu=58.2=h9c2bf20_1
   - intel-openmp=2019.0=118
+  - ipython=7.2.0=py36h39e3cac_0
+  - ipython_genutils=0.2.0=py36_0
   - jasper=2.0.14=h07fcdf6_1
+  - jedi=0.13.2=py36_0
   - jpeg=9b=h024ee3a_2
   - keras=2.2.4=0
   - keras-applications=1.0.6=py36_0
@@ -54,11 +59,17 @@ dependencies:
   - numpy-base=1.15.4=py36h81de0dd_0
   - opencv=3.4.2=py36h6fd60c2_1
   - openssl=1.1.1=h7b6447c_0
+  - parso=0.3.1=py36_0
   - pcre=8.42=h439df22_0
+  - pexpect=4.6.0=py36_0
+  - pickleshare=0.7.5=py36_0
   - pip=18.1=py36_0
   - pixman=0.34.0=hceecf20_3
+  - prompt_toolkit=2.0.7=py36_0
   - protobuf=3.6.1=py36he6710b0_0
+  - ptyprocess=0.6.0=py36_0
   - py-opencv=3.4.2=py36hb342d67_1
+  - pygments=2.3.1=py36_0
   - python=3.6.7=h0371630_0
   - pyyaml=3.13=py36h14c3975_0
   - readline=7.0=h7b6447c_5
@@ -71,6 +82,8 @@ dependencies:
   - tensorflow-base=1.12.0=mkl_py36h3c3e929_0
   - termcolor=1.1.0=py36_1
   - tk=8.6.8=hbc83047_0
+  - traitlets=4.3.2=py36_0
+  - wcwidth=0.1.7=py36_0
   - werkzeug=0.14.1=py36_0
   - wheel=0.32.2=py36_0
   - xz=5.2.4=h14c3975_4
