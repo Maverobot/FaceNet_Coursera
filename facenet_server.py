@@ -184,9 +184,3 @@ with SimpleXMLRPCServer(('localhost', 8000),
     server.register_function(verify_function, name='verify')
     print("Ready to take face recognition request...")
     server.serve_forever()
-
-# Example client
-# import xmlrpc.client
-# s = xmlrpc.client.ServerProxy('http://localhost:8000')
-# print(s.face_detection("path_to_the_picture"))  # Returns 2**3 = 8
-
