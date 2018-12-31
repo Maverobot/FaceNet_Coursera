@@ -9,7 +9,11 @@ args = parser.parse_args()
 try:
     s = xmlrpc.client.ServerProxy("http://localhost:8000")
     if args.name:
-        print(s.verify(args.image_path, args.name))
+        same_person = s.verify(args.image_path, args.name)
+        if same_person:
+            print("The given image is indeed from " + args.name + ".")
+        else:
+            print("The given image is NOT from " + args.name + ".")
     else:
         print(s.get_identity(args.image_path))
 except ConnectionRefusedError as e:
