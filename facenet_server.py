@@ -8,7 +8,8 @@ from keras.layers.core import Lambda, Flatten, Dense
 from keras.initializers import glorot_uniform
 from keras.engine.topology import Layer
 from keras import backend as K
-K.set_image_data_format('channels_first')
+
+K.set_image_data_format("channels_first")
 import cv2
 import os
 import numpy as np
@@ -23,7 +24,8 @@ from xmlrpc.server import SimpleXMLRPCRequestHandler
 
 np.set_printoptions(threshold=np.nan)
 
-def triplet_loss(y_true, y_pred, alpha = 0.2):
+
+def triplet_loss(y_true, y_pred, alpha=0.2):
     """
     Implementation of the triplet loss as defined by formula (3)
 
@@ -106,7 +108,7 @@ def who_is_it(image_path, database, model):
     identity -- string, the name prediction for the person on image_path
     """
 
-    ### START CODE HERE ### 
+    ### START CODE HERE ###
 
     ## Step 1: Compute the target "encoding" for the image. Use img_to_encoding() see example above. ## (≈ 1 line)
     encoding = img_to_encoding(image_path, model)
@@ -132,7 +134,7 @@ def who_is_it(image_path, database, model):
     if min_dist > 0.7:
         print("Not in the database.")
     else:
-        print ("it's " + str(identity) + ", the distance is " + str(min_dist))
+        print("it's " + str(identity) + ", the distance is " + str(min_dist))
 
     return min_dist, identity
 
@@ -143,7 +145,7 @@ FRmodel = faceRecoModel(input_shape=(3, 96, 96))
 print("Total Params:", FRmodel.count_params())
 
 
-FRmodel.compile(optimizer = 'adam', loss = triplet_loss, metrics = ['accuracy'])
+FRmodel.compile(optimizer="adam", loss=triplet_loss, metrics=["accuracy"])
 load_weights_from_FaceNet(FRmodel)
 
 database = {}
@@ -168,19 +170,23 @@ who_is_it("images/camera_0.jpg", database, FRmodel)
 
 # Restrict to a particular path.
 class RequestHandler(SimpleXMLRPCRequestHandler):
-    rpc_paths = ('/RPC2',)
+    rpc_paths = ("/RPC2",)
+
 
 # Create server
-with SimpleXMLRPCServer(('localhost', 8000),
-                        requestHandler=RequestHandler) as server:
+with SimpleXMLRPCServer(("localhost", 8000), requestHandler=RequestHandler) as server:
     server.register_introspection_functions()
+
     def get_identity(pic_path):
         [_, name] = who_is_it(pic_path, database, FRmodel)
         return name
+
     server.register_function(get_identity)
+
     def verify_function(pic_path, name):
         [_, same_person] = verify(pic_path, name, database, FRmodel)
         return same_person
-    server.register_function(verify_function, name='verify')
+
+    server.register_function(verify_function, name="verify")
     print("Ready to take face recognition request...")
     server.serve_forever()
